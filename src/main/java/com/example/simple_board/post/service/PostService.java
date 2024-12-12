@@ -4,6 +4,8 @@ import com.example.simple_board.post.db.PostEntity;
 import com.example.simple_board.post.db.PostRepository;
 import com.example.simple_board.post.model.PostRequest;
 import com.example.simple_board.post.model.PostViewRequest;
+import com.example.simple_board.reply.db.ReplyEntity;
+import com.example.simple_board.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import java.util.List;
 public class PostService {
 
 	private final PostRepository postRepository;
+	private final ReplyService replyService;
 
 	public PostEntity create(
 			PostRequest postRequest
@@ -42,6 +45,9 @@ public class PostService {
 						throw new RuntimeException(
 								String.format(format, it.getPassword(), postViewRequest.getPassword()));
 					}
+					List<ReplyEntity> replyList = replyService.findAllByPostId(it.getId());
+					it.setReplyList(replyList);
+
 					return it;
 				}).orElseThrow(
 						() -> {

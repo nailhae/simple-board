@@ -1,12 +1,12 @@
-package com.example.simple_board.post.db;
+package com.example.simple_board.reply.db;
 
-import com.example.simple_board.reply.db.ReplyEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 
 @Getter
 @Setter
@@ -14,23 +14,20 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @ToString
-@Entity(name = "post")
-public class PostEntity {
+@Entity(name = "reply")
+public class ReplyEntity {
 
 	@Id
 	@GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
 	private Long id;
-	private Long boardId;
+	private Long postId;
 	private String userName;
 	private String password;
-	private String email;
 	private String status;
 	private String title;
 
 	@Column(columnDefinition = "TEXT")
 	private String content;
-	private LocalDateTime postedAt;
+	private LocalDateTime repliedAt;
 
-	@Transient
-	private List<ReplyEntity> replyList = List.of();
 }
